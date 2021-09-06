@@ -22,6 +22,28 @@ class Fs
 
 
     /**
+     * Указатель на текущий экземпляр класса.
+     *
+     * @var Fs
+     */
+    protected static $instance;
+
+
+    /**
+     * Получает экземпляр класса.
+     *
+     * @return Fs
+     */
+    public static function getInstance()
+    {
+        if (static::$instance == null) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
+    }
+
+    /**
      * Устанавливает/обновляет время доступа и модификации файла.
      * Если файл или каталог не существует, будет создан пустой файл по указанному пути.
      *
