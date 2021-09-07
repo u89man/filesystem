@@ -3,6 +3,7 @@
 namespace U89Man\Filesystem;
 
 use FilesystemIterator;
+use InvalidArgumentException;
 
 class Fs
 {
@@ -516,5 +517,21 @@ class Fs
     {
         return (int) filemtime($path);
     }
-}
 
+    /**
+     * Экспортирует массив данных в PHP файл.
+     *
+     * @param string $path
+     * @param array $data
+     *
+     * @return void
+     */
+    public function export($path, array $data)
+    {
+        if (strtolower(substr($path, -4)) != '.php') {
+            throw new InvalidArgumentException('Не корректный тип файла.');
+        }
+
+        $this->writeFile($path, '<?php return '.var_export($data, true).';', true);
+    }
+}
