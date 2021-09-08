@@ -543,6 +543,21 @@ class Fs
     public function export($path, array $data)
     {
         $this->ensurePhpFile($path);
+
         $this->writeFile($path, '<?php return '.var_export($data, true).';', true);
+    }
+
+    /**
+     * Импортирует массив данных из PHP файла.
+     *
+     * @param string $path
+     *
+     * @return array
+     */
+    public function import($path)
+    {
+        $this->ensurePhpFile($path);
+
+        return require $path;
     }
 }
