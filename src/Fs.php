@@ -519,6 +519,20 @@ class Fs
     }
 
     /**
+     * Проверяет, коректность пути к файлу с расширением ".php".
+     *
+     * @param string $path
+     *
+     * @return void
+     */
+    protected function ensurePhpFile($path)
+    {
+        if (strtolower(substr($path, -4)) != '.php') {
+            throw new InvalidArgumentException('Не корректный тип файла.');
+        }
+    }
+
+    /**
      * Экспортирует массив данных в PHP файл.
      *
      * @param string $path
@@ -528,10 +542,7 @@ class Fs
      */
     public function export($path, array $data)
     {
-        if (strtolower(substr($path, -4)) != '.php') {
-            throw new InvalidArgumentException('Не корректный тип файла.');
-        }
-
+        $this->ensurePhpFile($path);
         $this->writeFile($path, '<?php return '.var_export($data, true).';', true);
     }
 }
